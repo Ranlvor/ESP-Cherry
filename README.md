@@ -26,3 +26,16 @@ Little board that connects 4 Cherry Switches and 4 LEDs to a Wemos D1 Mini Board
   * 52.07, 7.62
   * 52.07, 78.74
 
+# Software
+* Use whatever can control IO pins
+* I use Tasmota-Firmware with the following IO-settings:
+  * Modul type: 18 Generic
+  * D3 GPIO0: 15 Switch7
+  * D4 GPIO2: 16 Switch8
+  * D2 GPIO4: 14 Switch6
+  * D1 GPIO5: 13 Switch5
+  * D6 GPIO12: 22 Relay2
+  * D7 GPIO13: 21 Relay1
+  * D5 GPIO14: 23 Relay3
+  * D0 GPIO16: 24 Relay4
+  * otherwise: 00 None
