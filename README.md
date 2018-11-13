@@ -13,7 +13,7 @@ Little board that connects 4 Cherry Switches and 4 LEDs to a Wemos D1 Mini Board
 * Resistors R3, R4, R5, R6: protective resistors for LEDs D1, D2, D3, D4: choose whatever fits your LEDs.
 
 ## Optional Parts:
-* Add R7 = 4.7kΩ and U3 = DS18B20 for temperature mesurement
+* Add R7 = 4.7kΩ and U2 = DS18B20 for temperature mesurement
 
 # Other
 * Power the Wemos D1 via USB, it powers the rest of the board (or solder 3.3V or 5V directly to the Wemos)
