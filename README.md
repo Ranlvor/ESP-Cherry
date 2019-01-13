@@ -10,7 +10,7 @@ Little board that connects 4 Cherry Switches and 4 LEDs to a Wemos D1 Mini Board
 * Switches SW1, SW2, SW3, SW4: CHERRY MX-Switches, choose to your liking
 * Resistors R1, R2: Pull-Up-Resistors for SW3 and SW4, 1kΩ - 100kΩ should be fine
 * LEDs D1, D2, D3, D4: LEDs to iluminate the Keykaps, choose to your liking.  Use LEDs which fit your switches. The switches I used fit 3mm LED's but some do not
-* Resistors R3, R4, R5, R6: protective resistors for LEDs D1, D2, D3, D4: choose whatever fits your LEDs.
+* Resistors R3, R4, R5, R6: protective resistors for LEDs D1, D2, D3, D4: choose whatever fits your LEDs to be powered from 3.3V.
 
 ## Optional Parts:
 * Add R7 = 4.7kΩ and U2 = DS18B20 for temperature mesurement
