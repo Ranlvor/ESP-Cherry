@@ -1,5 +1,4 @@
 $fn = 32;
-include <nutsnbolts/cyl_head_bolt.scad>;
 //unit = mm
 boardTolerance = 0.5;
 boardX = 59.69 + boardTolerance;
@@ -16,12 +15,13 @@ wallUpper = deckelDicke;
 clearence = 25;
 
 mountingPillarThickness = 6;
-mountingHoleSize = 3; //hole in board is 3.2
+mountingNutDiameter = 4;
+mountingNutScrewDiameter = 3;
 renderMode = 1; //1 = 3D lower, 2 = 2D upper, 3 = 2D upper outline, 4 = 2D upper text
 //color([0,1,0]) cube([boardX-delta, boardY-delta, boardZ-delta]);
 
-////tolerance = 0; 
-tolerance = 0.3; //for final render
+tolerance = 0; 
+//tolerance = 0.3; //for final render
 
 usbHoleThickness = 10;
 usbHoleLength = 12;
@@ -49,8 +49,8 @@ module mountingPiller(x,y) {
     //translate([x,y,0]) cylinder(h=boardZ+2*delta, r=mountingHoleSize);
 }
 
-module mountingHole(x,y, hole="M5") {
-    translate([x,y,5]) hole_threaded(name=hole, l=10);
+module mountingHole(x,y) {
+    translate([x,y,-10]) cylinder(h=10+2*delta, d=mountingNutDiameter);
 }
 module upperPart() {   
     keyHoleSize = 19;
@@ -64,6 +64,13 @@ module upperPart() {
         translate([17.78,33.02]) square(size = [keyHoleSize,keyHoleSize], center=true);
         translate([17.78,53.34]) square(size = [keyHoleSize,keyHoleSize], center=true);
         translate([17.78,73.66]) square(size = [keyHoleSize,keyHoleSize], center=true);
+        
+        if(renderMode != 1) {
+          translate([boardX+xExtraSpace/2, boardY-xExtraSpace/2]) circle(d=mountingNutScrewDiameter);
+           translate([boardX+xExtraSpace/2, xExtraSpace/2]) circle(d=mountingNutScrewDiameter);
+           translate([5.08+(boardTolerance/2), 20.32+(boardTolerance/2)]) circle(d=mountingNutScrewDiameter);
+        }
+        
         for(i = [1 : 2 : 8]) {
             translate([-wallUpper-delta, -wallUpper+i*edgePatternSize]) square(size = [deckelDicke+delta+tolerance,  edgePatternSize]);
             translate([boardX+xExtraSpace+2*delta, -wallUpper+i*edgePatternSize]) square(size = [deckelDicke+delta+tolerance,  edgePatternSize]);
@@ -114,7 +121,14 @@ difference() {
     translate([-wallUpper, -wallUpper, -clearence-floorThickness]) cube([mainCubeSizeX, mainCubeSizeY, mainCubeSizeZ]);
     translate([0, 0, 0]) cube([boardX, boardY, boardZ+delta+buttonToUserPannel]);
     translate([overhang, overhang, -clearence]) cube([boardX-1*overhang, boardY-2*overhang, clearence+boardZ]);
-    translate([0,0, boardZ]) cube([boardX+xExtraSpace, boardY, buttonToUserPannel+delta]);
+    translate([0,0, boardZ]) 
+    difference() {
+        cube([boardX+xExtraSpace-delta, boardY, buttonToUserPannel+2*delta]);
+        translate([boardX-delta,-delta,0]) cube([xExtraSpace, xExtraSpace, buttonToUserPannel+3*delta]);
+       translate([boardX-delta,boardY-xExtraSpace,0]) cube([xExtraSpace, xExtraSpace, buttonToUserPannel+3*delta]);
+    }
+    translate([0,0, buttonToUserPannel-2]) mountingHole(boardX+xExtraSpace/2,boardY-xExtraSpace/2);
+    translate([0,0, buttonToUserPannel-2]) mountingHole(boardX+xExtraSpace/2,xExtraSpace/2);
     translate([0,0, boardZ + buttonToUserPannel - deckelDicke + delta]) minkowski(){
        linear_extrude(height = deckelDicke+delta) upperPart();
        sphere(tolerance);
@@ -126,7 +140,10 @@ mountingPiller(5.08+(boardTolerance/2),20.32+(boardTolerance/2));
 //mountingHole(5.08,58.42);
 mountingPiller(5.08+(boardTolerance/2),78.74+(boardTolerance/2));
 mountingPiller(52.07+(boardTolerance/2),7.62+(boardTolerance/2));
-mountingPiller(52.07+(boardTolerance/2),78.74+(boardTolerance/2));
+difference() {
+    mountingPiller(52.07+(boardTolerance/2),78.74+(boardTolerance/2));
+    translate([52.07+(boardTolerance/2),78.74+(boardTolerance/2)-10,-28]) rotate([45,0,0]) translate([-10,0,-100]) cube([20,20,200], center);
+}
 }
 
 mountingHole(5.08+(boardTolerance/2),20.32+(boardTolerance/2));
